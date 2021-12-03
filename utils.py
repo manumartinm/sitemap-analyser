@@ -27,7 +27,12 @@ def get_sitemap_df(sitempas):
                 soup = BeautifulSoup(res.text, 'html.parser')
                 robots_tag = soup.find_all("meta", {"name": "robots"})
                 robots = meta_robots(robots_tag)
-                url_info = [url.text, res.status_code, robots, sitemap]
+                url_info = {
+                    "url": url.text,
+                    "robots": robots,
+                    "sitemap": sitemap,
+                    "status": res.status_code
+                }
                 urls.append(url_info)
 
     df = pd.DataFrame(urls, columns=["url", "status_code", "meta_robots", "sitemap"])
